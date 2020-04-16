@@ -19,3 +19,6 @@ class Covid19(models.Model):
     reportedCases=models.IntegerField(verbose_name="reported_cases")
     population=models.IntegerField(verbose_name='Population')
     totalHospitalBeds=models.IntegerField(verbose_name="Total Hospital Beds")
+
+    def __str__(self):
+        return self.name

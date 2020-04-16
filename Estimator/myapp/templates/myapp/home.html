@@ -1,0 +1,37 @@
+{%extends 'myapp/base.html'%}
+{%load crispy_forms_tags%}
+{%block content%}
+<div class="container">
+<div class="row">
+<div class="col-sm-4">
+  <form method="POST" action="" enctype="multipart/form-data">
+    {%csrf_token%}
+    {{form|crispy}}
+    <button>Estimate</button>
+  </form>
+
+  </div>
+
+  <div class="col-sm-4 bg-dark">
+      <div class="card-header" style=background-color:dodgerblue;>
+        <legend class="text-white">Impact</legend>
+        </div>
+        <div class="card-body bg-white">
+
+
+          </div>
+    </div>
+
+    <div class="col-sm-4 bg-danger">
+      <div class="card-header" style=background-color:dodgerblue;>
+        <legend class="text-white">Severe Impact</legend>
+        </div>
+        <div class="card-body bg-white">
+
+
+          </div>
+
+      </div>
+  </div>
+  </div>
+{%endblock%}
