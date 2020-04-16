@@ -25,7 +25,9 @@ def Home(request):
             #challenge 2
             severeCasesByRequestedTime_impact=InfectionByRequestedTime*0.15
             severeCasesByRequestedTime_severe=InfectionByRequestedTimeSevere*0.15
-
+            hospitalBedsByRequestedTime_impact=(totalHospitalBeds*0.35)-severeCasesByRequestedTime_impact
+            hospitalBedsByRequestedTime_severe=(totalHospitalBeds*0.35)-severeCasesByRequestedTime_severe
+            #challenge 3
 
     else:
         form=Covid19Form()
@@ -38,5 +40,7 @@ def Home(request):
     'InfectionByRequestedTimeSevere':InfectionByRequestedTimeSevere,
     'severeCasesByRequestedTime_impact':severeCasesByRequestedTime_impact,
     'severeCasesByRequestedTime_severe':severeCasesByRequestedTime_severe,
+    'hospitalBedsByRequestedTime_impact':hospitalBedsByRequestedTime_impact,
+    'hospitalBedsByRequestedTime_severe':hospitalBedsByRequestedTime_severe
     }
     return render(request,'myapp/home.html',context)
