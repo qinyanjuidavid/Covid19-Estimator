@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from myapp.forms import Covid19Form
+from myapp.models import Impact,SevereImpact
 
 
 def Home(request):
@@ -18,6 +19,7 @@ def Home(request):
     casesForICUByRequestedTime_severe=0
     dollarsInFlight_impact=0
     dollarsInFlight_severe=0
+    name=" "
     if request.method=="POST":
         form=Covid19Form(request.POST or None,request.FILES or None)
         if form.is_valid():
@@ -31,6 +33,7 @@ def Home(request):
             population=form.cleaned_data['population']
             totalHospitalBeds=form.cleaned_data['totalHospitalBeds']
             #challenge 1
+            name=name
             currentlyInfected=reportedCases*10
             currentlyInfectedsevere=reportedCases*50
             time=period/3
@@ -51,12 +54,37 @@ def Home(request):
             dollarsInFlight_impact=round(dollarsInFlight_impact,2)
             dollarsInFlight_severe=InfectionByRequestedTimeSevere*avgDailyIncomeInUsd*avgDailyIncomePopulation*30
             dollarsInFlight_severe=round(dollarsInFlight_severe,2)
+            #*************saving infor
+            impact=Impact(
+            name=name,
+            currentlyInfected=currentlyInfected,
+            InfectionByRequestedTime=InfectionByRequestedTime,
+            severeCasesByRequestedTime_impact=severeCasesByRequestedTime_impact,
+            hospitalBedsByRequestedTime_impact=hospitalBedsByRequestedTime_impact,
+            casesForICUByRequestedTime_impact=casesForICUByRequestedTime_impact,
+            casesForVentilatorsByRequestedTime_impact=casesForVentilatorsByRequestedTime_impact,
+            dollarsInFlight_impact=dollarsInFlight_impact
+            )
 
+            severeimpact=SevereImpact(
+            name=name,
+            currentlyInfectedsevere=currentlyInfectedsevere,
+            InfectionByRequestedTimeSevere=InfectionByRequestedTimeSevere,
+            severeCasesByRequestedTime_severe=severeCasesByRequestedTime_severe,
+            hospitalBedsByRequestedTime_severe=hospitalBedsByRequestedTime_severe,
+            casesForICUByRequestedTime_severe=casesForICUByRequestedTime_severe,
+            casesForVentilatorsByRequestedTime_severe=casesForVentilatorsByRequestedTime_severe,
+            dollarsInFlight_severe=dollarsInFlight_severe
+            )
+            form.save()
+            severeimpact.save()
+            impact.save()
     else:
         form=Covid19Form()
 
     context={
     'form':form,
+    'name':name,
     'currentlyInfected':currentlyInfected,
     'currentlyInfectedsevere':currentlyInfectedsevere,
     'InfectionByRequestedTime':InfectionByRequestedTime,
