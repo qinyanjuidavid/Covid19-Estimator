@@ -1,7 +1,7 @@
 {%extends 'myapp/base.html'%}
 {%load crispy_forms_tags%}
 {%block content%}
-<div class="container">
+<div class="container-fluid">
 <div class="row">
 <div class="col-sm-4">
   <form method="POST" action="" enctype="multipart/form-data">
@@ -13,23 +13,45 @@
   </div>
 
   <div class="col-sm-4 bg-dark">
-      <div class="card-header" style=background-color:dodgerblue;>
-        <legend class="text-white">Impact</legend>
-        </div>
-        <div class="card-body bg-white">
-
-
-          </div>
+    <div class="card-header" style=background-color:dodgerblue;>
+      <legend class="text-white">Impact</legend>
+      </div>
+    <table class="table table-striped table-bordered">
+      <theader>
+        <th>#</th>
+        <th>number</th>
+      </theader>
+        <tbody class="bg-white">
+          <tr><th>Currently Infected</th> <td>{{currentlyInfected}}</td></tr>
+          <tr><th>Infection By Requested Time</th><td></td></tr>
+          <tr><th>Severe Cases By Requested Time</th><td></td></tr>
+          <tr><th>Hospital Beds By Requested Time</th><td></td></tr>
+          <tr><th>Cases For ICU By Requested Time</th><td></td></tr>
+          <tr><th>Cases For Ventilators By Requested Time</th><td></td></tr>
+          <tr><th>Dollars In Flight</th><td></td></tr>
+          </tbody>
+      </table>
     </div>
 
     <div class="col-sm-4 bg-danger">
       <div class="card-header" style=background-color:dodgerblue;>
         <legend class="text-white">Severe Impact</legend>
         </div>
-        <div class="card-body bg-white">
-
-
-          </div>
+        <table class="table table-striped table-bordered">
+          <theader>
+            <th>#</th>
+            <th>number</th>
+          </theader>
+            <tbody class="bg-white">
+              <tr><th>Currently Infected</th> <td>{{currentlyInfectedsevere}}</td></tr>
+              <tr><th>Infection By Requested Time</th><td></td></tr>
+              <tr><th>Severe Cases By Requested Time</th><td></td></tr>
+              <tr><th>Hospital Beds By Requested Time</th><td></td></tr>
+              <tr><th>Cases For ICU By Requested Time</th><td></td></tr>
+              <tr><th>Cases For Ventilators By Requested Time</th><td></td></tr>
+              <tr><th>Dollars In Flight</th><td></td></tr>
+              </tbody>
+          </table>
 
       </div>
   </div>

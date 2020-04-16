@@ -4,9 +4,24 @@ from myapp.forms import Covid19Form
 
 
 def Home(request):
+    currentlyInfected=0
+    currentlyInfectedsevere=0
+    InfectionByRequestedTime=0
+    InfectionByRequestedTimeSevere=0
+    severeCasesByRequestedTime_impact=0
+    severeCasesByRequestedTime_severe=0
+    hospitalBedsByRequestedTime_impact=0
+    hospitalBedsByRequestedTime_severe=0
+    casesForVentilatorsByRequestedTime_impact=0
+    casesForVentilatorsByRequestedTime_severe=0
+    casesForICUByRequestedTime_impact=0
+    casesForICUByRequestedTime_severe=0
+    dollarsInFlight_impact=0
+    dollarsInFlight_severe=0
     if request.method=="POST":
         form=Covid19Form(request.POST or None,request.FILES or None)
         if form.is_valid():
+            reportedCases=form.cleaned_data['reportedCases']
             name=form.cleaned_data['name']
             avgAge=form.cleaned_data['avgAge']
             avgDailyIncomeInUsd=form.cleaned_data['avgDailyIncomeInUsd']
