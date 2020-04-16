@@ -28,6 +28,14 @@ def Home(request):
             hospitalBedsByRequestedTime_impact=(totalHospitalBeds*0.35)-severeCasesByRequestedTime_impact
             hospitalBedsByRequestedTime_severe=(totalHospitalBeds*0.35)-severeCasesByRequestedTime_severe
             #challenge 3
+            casesForICUByRequestedTime_impact=InfectionByRequestedTime*0.05
+            casesForICUByRequestedTime_severe=InfectionByRequestedTimeSevere*0.05
+            casesForVentilatorsByRequestedTime_impact=InfectionByRequestedTime*0.02
+            casesForVentilatorsByRequestedTime_severe=InfectionByRequestedTimeSevere*0.02
+            dollarsInFlight_impact=InfectionByRequestedTime*avgDailyIncomeInUsd*avgDailyIncomePopulation*30
+            dollarsInFlight_impact=round(dollarsInFlight_impact,2)
+            dollarsInFlight_severe=InfectionByRequestedTimeSevere*avgDailyIncomeInUsd*avgDailyIncomePopulation*30
+            dollarsInFlight_severe=round(dollarsInFlight_severe,2)
 
     else:
         form=Covid19Form()
@@ -41,6 +49,12 @@ def Home(request):
     'severeCasesByRequestedTime_impact':severeCasesByRequestedTime_impact,
     'severeCasesByRequestedTime_severe':severeCasesByRequestedTime_severe,
     'hospitalBedsByRequestedTime_impact':hospitalBedsByRequestedTime_impact,
-    'hospitalBedsByRequestedTime_severe':hospitalBedsByRequestedTime_severe
+    'hospitalBedsByRequestedTime_severe':hospitalBedsByRequestedTime_severe,
+    'casesForICUByRequestedTime_impact':casesForICUByRequestedTime_impact,
+    'casesForICUByRequestedTime_severe':casesForICUByRequestedTime_severe,
+    'casesForVentilatorsByRequestedTime_impact':casesForVentilatorsByRequestedTime_impact,
+    'casesForVentilatorsByRequestedTime_severe':casesForVentilatorsByRequestedTime_severe,
+    'dollarsInFlight_impact':dollarsInFlight_impact,
+    'dollarsInFlight_severe':dollarsInFlight_severe
     }
     return render(request,'myapp/home.html',context)
