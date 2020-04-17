@@ -1,10 +1,28 @@
 from django.shortcuts import render
 from django.http import HttpResponse,HttpResponseRedirect
 from myapp.forms import Covid19Form
-from myapp.models import Impact,SevereImpact
+from myapp.models import Impact,SevereImpact,Covid19
 
+def continentView(request):
+    covid=Covid19.objects.all()
+    context={
+    'covid':covid
+    }
+    return render(request,'myapp/continent.html',context)
 
-def Home(request):
+def AddFormView(request):
+    if request.method=="POST":
+        form=Covid19Form(request.POST or None,request.FILES or None)
+        if form.is_valid():
+            form.save()
+
+    else:
+        form=Covid19Form()
+    context={
+    "form":form
+    }
+    return render(request,'myapp/add.html',context)
+def Home(request,id):
     currentlyInfected=0
     currentlyInfectedsevere=0
     InfectionByRequestedTime=0
@@ -20,84 +38,70 @@ def Home(request):
     dollarsInFlight_impact=0
     dollarsInFlight_severe=0
     name=" "
-    if request.method=="POST":
-        form=Covid19Form(request.POST or None,request.FILES or None)
-        if form.is_valid():
-            reportedCases=form.cleaned_data['reportedCases']
-            name=form.cleaned_data['name']
-            avgAge=form.cleaned_data['avgAge']
-            avgDailyIncomeInUsd=form.cleaned_data['avgDailyIncomeInUsd']
-            avgDailyIncomePopulation=form.cleaned_data['avgDailyIncomePopulation']
-            period=form.cleaned_data['period']
-            timeToElapse=form.cleaned_data['timeToElapse']
-            population=form.cleaned_data['population']
-            totalHospitalBeds=form.cleaned_data['totalHospitalBeds']
-            #challenge 1
-            name=name
-            currentlyInfected=reportedCases*10
-            currentlyInfectedsevere=reportedCases*50
-            time=period/3
-            actualtime=2*round(time,0)
-            InfectionByRequestedTime=currentlyInfected*actualtime
-            InfectionByRequestedTimeSevere=currentlyInfectedsevere*actualtime
-            #challenge 2
-            severeCasesByRequestedTime_impact=InfectionByRequestedTime*0.15
-            severeCasesByRequestedTime_severe=InfectionByRequestedTimeSevere*0.15
-            hospitalBedsByRequestedTime_impact=(totalHospitalBeds*0.35)-severeCasesByRequestedTime_impact
-            hospitalBedsByRequestedTime_severe=(totalHospitalBeds*0.35)-severeCasesByRequestedTime_severe
-            #challenge 3
-            casesForICUByRequestedTime_impact=InfectionByRequestedTime*0.05
-            casesForICUByRequestedTime_severe=InfectionByRequestedTimeSevere*0.05
-            casesForVentilatorsByRequestedTime_impact=InfectionByRequestedTime*0.02
-            casesForVentilatorsByRequestedTime_severe=InfectionByRequestedTimeSevere*0.02
-            dollarsInFlight_impact=InfectionByRequestedTime*avgDailyIncomeInUsd*avgDailyIncomePopulation*30
-            dollarsInFlight_impact=round(dollarsInFlight_impact,2)
-            dollarsInFlight_severe=InfectionByRequestedTimeSevere*avgDailyIncomeInUsd*avgDailyIncomePopulation*30
-            dollarsInFlight_severe=round(dollarsInFlight_severe,2)
-            #*************saving infor
-            impact=Impact(
-            name=name,
-            currentlyInfected=currentlyInfected,
-            InfectionByRequestedTime=InfectionByRequestedTime,
-            severeCasesByRequestedTime_impact=severeCasesByRequestedTime_impact,
-            hospitalBedsByRequestedTime_impact=hospitalBedsByRequestedTime_impact,
-            casesForICUByRequestedTime_impact=casesForICUByRequestedTime_impact,
-            casesForVentilatorsByRequestedTime_impact=casesForVentilatorsByRequestedTime_impact,
-            dollarsInFlight_impact=dollarsInFlight_impact
-            )
+    form=Covid19Form()
+    if form.is_valid():
+        reportedCases=form.cleaned_data['reportedCases']
+        name=form.cleaned_data['name']
+        avgAge=form.cleaned_data['avgAge']
+        avgDailyIncomeInUsd=form.cleaned_data['avgDailyIncomeInUsd']
+        avgDailyIncomePopulation=form.cleaned_data['avgDailyIncomePopulation']
+        period=form.cleaned_data['period']
+        timeToElapse=form.cleaned_data['timeToElapse']
+        population=form.cleaned_data['population']
+        totalHospitalBeds=form.cleaned_data['totalHospitalBeds']
+        #challenge 1
+        name=name
+        currentlyInfected=reportedCases*10
+        currentlyInfectedsevere=reportedCases*50
+        time=period/3
+        actualtime=2*round(time,0)
+        InfectionByRequestedTime=currentlyInfected*actualtime
+        InfectionByRequestedTimeSevere=currentlyInfectedsevere*actualtime
+        #challenge 2
+        severeCasesByRequestedTime_impact=InfectionByRequestedTime*0.15
+        severeCasesByRequestedTime_severe=InfectionByRequestedTimeSevere*0.15
+        hospitalBedsByRequestedTime_impact=(totalHospitalBeds*0.35)-severeCasesByRequestedTime_impact
+        hospitalBedsByRequestedTime_severe=(totalHospitalBeds*0.35)-severeCasesByRequestedTime_severe
+        #challenge 3
+        casesForICUByRequestedTime_impact=InfectionByRequestedTime*0.05
+        casesForICUByRequestedTime_severe=InfectionByRequestedTimeSevere*0.05
+        casesForVentilatorsByRequestedTime_impact=InfectionByRequestedTime*0.02
+        casesForVentilatorsByRequestedTime_severe=InfectionByRequestedTimeSevere*0.02
+        dollarsInFlight_impact=InfectionByRequestedTime*avgDailyIncomeInUsd*avgDailyIncomePopulation*30
+        dollarsInFlight_impact=round(dollarsInFlight_impact,2)
+        dollarsInFlight_severe=InfectionByRequestedTimeSevere*avgDailyIncomeInUsd*avgDailyIncomePopulation*30
+        dollarsInFlight_severe=round(dollarsInFlight_severe,2)
+        #*************saving infor
+        impact=Impact(
+        name=name,
+        currentlyInfected=currentlyInfected,
+        InfectionByRequestedTime=InfectionByRequestedTime,
+        severeCasesByRequestedTime_impact=severeCasesByRequestedTime_impact,
+        hospitalBedsByRequestedTime_impact=hospitalBedsByRequestedTime_impact,
+        casesForICUByRequestedTime_impact=casesForICUByRequestedTime_impact,
+        casesForVentilatorsByRequestedTime_impact=casesForVentilatorsByRequestedTime_impact,
+        dollarsInFlight_impact=dollarsInFlight_impact
+        )
 
-            severeimpact=SevereImpact(
-            name=name,
-            currentlyInfectedsevere=currentlyInfectedsevere,
-            InfectionByRequestedTimeSevere=InfectionByRequestedTimeSevere,
-            severeCasesByRequestedTime_severe=severeCasesByRequestedTime_severe,
-            hospitalBedsByRequestedTime_severe=hospitalBedsByRequestedTime_severe,
-            casesForICUByRequestedTime_severe=casesForICUByRequestedTime_severe,
-            casesForVentilatorsByRequestedTime_severe=casesForVentilatorsByRequestedTime_severe,
-            dollarsInFlight_severe=dollarsInFlight_severe
-            )
-            form.save()
-            severeimpact.save()
-            impact.save()
-    else:
-        form=Covid19Form()
+        severeimpact=SevereImpact(
+        name=name,
+        currentlyInfectedsevere=currentlyInfectedsevere,
+        InfectionByRequestedTimeSevere=InfectionByRequestedTimeSevere,
+        severeCasesByRequestedTime_severe=severeCasesByRequestedTime_severe,
+        hospitalBedsByRequestedTime_severe=hospitalBedsByRequestedTime_severe,
+        casesForICUByRequestedTime_severe=casesForICUByRequestedTime_severe,
+        casesForVentilatorsByRequestedTime_severe=casesForVentilatorsByRequestedTime_severe,
+        dollarsInFlight_severe=dollarsInFlight_severe
+        )
+        severeimpact.save()
+        impact.save()
+    impactObj=Impact.objects.all()
+    covidObj=Covid19.objects.get(id=id)
+    severeObj=SevereImpact.objects.all()
 
     context={
-    'form':form,
     'name':name,
-    'currentlyInfected':currentlyInfected,
-    'currentlyInfectedsevere':currentlyInfectedsevere,
-    'InfectionByRequestedTime':InfectionByRequestedTime,
-    'InfectionByRequestedTimeSevere':InfectionByRequestedTimeSevere,
-    'severeCasesByRequestedTime_impact':severeCasesByRequestedTime_impact,
-    'severeCasesByRequestedTime_severe':severeCasesByRequestedTime_severe,
-    'hospitalBedsByRequestedTime_impact':hospitalBedsByRequestedTime_impact,
-    'hospitalBedsByRequestedTime_severe':hospitalBedsByRequestedTime_severe,
-    'casesForICUByRequestedTime_impact':casesForICUByRequestedTime_impact,
-    'casesForICUByRequestedTime_severe':casesForICUByRequestedTime_severe,
-    'casesForVentilatorsByRequestedTime_impact':casesForVentilatorsByRequestedTime_impact,
-    'casesForVentilatorsByRequestedTime_severe':casesForVentilatorsByRequestedTime_severe,
-    'dollarsInFlight_impact':dollarsInFlight_impact,
-    'dollarsInFlight_severe':dollarsInFlight_severe
+    'impactObj':impactObj,
+    'severeObj':severeObj
     }
     return render(request,'myapp/home.html',context)
