@@ -21,7 +21,7 @@
         {%for covid in covid%}
         <tr>
           <th>{{forloop.counter}}.</th>
-          <td><a href="{%url 'myapp:home' covid.id%}">{{covid.name}}</a></td>
+          <td><a href="{%url 'myapp:home' covid.name%}">{{covid.name}}</a></td>
           <td>{{covid.population}}</td>
           <td>{{covid.avgAge}}</td>
           <td>{{covid.avgDailyIncomeInUsd}}</td>
@@ -35,6 +35,6 @@
         </tbody>
     </table>
     </div>
-<button class="btn btn-primary float-right col-sm-2">+ Add Data</button>
+<a href="{%url 'myapp:add'%}"><button class="btn btn-primary float-right col-sm-2">+ Add Data</button></a>
   </div>
 {%endblock%}

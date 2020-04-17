@@ -4,42 +4,42 @@
 <div class="container-fluid">
 <div class="row">
 
-  <div class="col-sm-4 bg-dark">
+  <div class="col-sm-6">
     <table class="table table-striped table-bordered" style=margin-top:2rem;>
       <theader>
         <tr class="text-white" style=background-color:dodgerblue;>
-        <th>{{name}}</th>
+        <th>{{covidObj.name}}</th>
         <th>Impact</th>
         <tr>
       </theader>
         <tbody class="bg-white">
-          <tr><th>Currently Infected</th> <td>{{currentlyInfected}}</td></tr>
-          <tr><th>Infection By Requested Time</th><td>{{InfectionByRequestedTime}}</td></tr>
-          <tr><th>Severe Cases By Requested Time</th><td>{{severeCasesByRequestedTime_impact}}</td></tr>
-          <tr><th>Hospital Beds By Requested Time</th><td>{{hospitalBedsByRequestedTime_impact}}</td></tr>
-          <tr><th>Cases For ICU By Requested Time</th><td>{{casesForICUByRequestedTime_impact}}</td></tr>
-          <tr><th>Cases For Ventilators By Requested Time</th><td>{{casesForVentilatorsByRequestedTime_impact}}</td></tr>
-          <tr><th>Dollars In Flight</th><td>{{dollarsInFlight_impact}}</td></tr>
+          <tr><th>Currently Infected</th> <td>{{impactObj.currentlyInfected}}</td></tr>
+          <tr><th>Infection By Requested Time</th><td>{{impactObj.InfectionByRequestedTime}}</td></tr>
+          <tr><th>Severe Cases By Requested Time</th><td>{{impactObj.severeCasesByRequestedTime_impact}}</td></tr>
+          <tr><th>Hospital Beds By Requested Time</th><td>{{impactObj.hospitalBedsByRequestedTime_impact}}</td></tr>
+          <tr><th>Cases For ICU By Requested Time</th><td>{{impactObj.casesForICUByRequestedTime_impact}}</td></tr>
+          <tr><th>Cases For Ventilators By Requested Time</th><td>{{impactObj.casesForVentilatorsByRequestedTime_impact}}</td></tr>
+          <tr><th>Dollars In Flight</th><td>{{impactObj.dollarsInFlight_impact}}</td></tr>
           </tbody>
       </table>
     </div>
 
-    <div class="col-sm-4 bg-danger">
+    <div class="col-sm-6">
         <table class="table table-striped table-bordered" style=margin-top:2rem;>
           <theader>
             <tr class="text-white" style=background-color:dodgerblue;>
-            <th>{{name}}</th>
+            <th>{{covidObj.name}}</th>
             <th>Severe Impact</th>
             </tr>
           </theader>
             <tbody class="bg-white">
-              <tr><th>Currently Infected</th> <td>{{currentlyInfectedsevere}}</td></tr>
-              <tr><th>Infection By Requested Time</th><td>{{InfectionByRequestedTimeSevere}}</td></tr>
-              <tr><th>Severe Cases By Requested Time</th><td>{{severeCasesByRequestedTime_severe}}</td></tr>
-              <tr><th>Hospital Beds By Requested Time</th><td>{{hospitalBedsByRequestedTime_severe}}</td></tr>
-              <tr><th>Cases For ICU By Requested Time</th><td>{{casesForICUByRequestedTime_severe}}</td></tr>
-              <tr><th>Cases For Ventilators By Requested Time</th><td>{{casesForVentilatorsByRequestedTime_severe}}</td></tr>
-              <tr><th>Dollars In Flight</th><td>{{dollarsInFlight_severe}}</td></tr>
+              <tr><th>Currently Infected</th> <td>{{severeObj.currentlyInfectedsevere}}</td></tr>
+              <tr><th>Infection By Requested Time</th><td>{{severeObj.InfectionByRequestedTimeSevere}}</td></tr>
+              <tr><th>Severe Cases By Requested Time</th><td>{{severeObj.severeCasesByRequestedTime_severe}}</td></tr>
+              <tr><th>Hospital Beds By Requested Time</th><td>{{severeObj.hospitalBedsByRequestedTime_severe}}</td></tr>
+              <tr><th>Cases For ICU By Requested Time</th><td>{{severeObj.casesForICUByRequestedTime_severe}}</td></tr>
+              <tr><th>Cases For Ventilators By Requested Time</th><td>{{severeObj.casesForVentilatorsByRequestedTime_severe}}</td></tr>
+              <tr><th>Dollars In Flight</th><td>{{severeObj.dollarsInFlight_severe}}</td></tr>
               </tbody>
           </table>
 

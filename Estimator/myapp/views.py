@@ -1,7 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
 from django.http import HttpResponse,HttpResponseRedirect
 from myapp.forms import Covid19Form
 from myapp.models import Impact,SevereImpact,Covid19
+from django.views.generic import DetailView
 
 def continentView(request):
     covid=Covid19.objects.all()
@@ -15,6 +16,7 @@ def AddFormView(request):
         form=Covid19Form(request.POST or None,request.FILES or None)
         if form.is_valid():
             form.save()
+            return HttpResponseRedirect('/')
 
     else:
         form=Covid19Form()
@@ -22,7 +24,8 @@ def AddFormView(request):
     "form":form
     }
     return render(request,'myapp/add.html',context)
-def Home(request,id):
+
+def Home(request):
     currentlyInfected=0
     currentlyInfectedsevere=0
     InfectionByRequestedTime=0
@@ -95,13 +98,17 @@ def Home(request,id):
         )
         severeimpact.save()
         impact.save()
-    impactObj=Impact.objects.all()
-    covidObj=Covid19.objects.get(id=id)
-    severeObj=SevereImpact.objects.all()
 
-    context={
-    'name':name,
-    'impactObj':impactObj,
-    'severeObj':severeObj
-    }
-    return render(request,'myapp/home.html',context)
+
+class CountinentDetailView(DetailView):
+    template_name = "myapp/home.html"
+    def get_object(self):
+        impactObj=get_object_or_404(Impact,name__iexact=self.kwargs.get("name"))
+        covidObj=get_object_or_404(Covid19,name__iexact=self.kwargs.get("name"))
+        severeObj=get_object_or_404(SevereImpact,name__iexact=self.kwargs.get("name"))
+        context={
+        'impactObj':impactObj,
+        'severeObj':severeObj,
+        'covidObj':covidObj
+        }
+        return context
